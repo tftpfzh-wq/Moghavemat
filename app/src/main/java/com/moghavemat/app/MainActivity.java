@@ -1,6 +1,4 @@
-```java
 package com.moghavemat.app;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -417,4 +415,3 @@ public class MainActivity extends Activity {
         content.addView(share);
     }
 }
-```
