@@ -37,10 +37,22 @@ jobs:
         with:
           gradle-version: '8.13'
 
-      - name: Build APK
+      - name: Check project files
         run: |
-          chmod +x gradlew
-          ./gradlew :app:assembleDebug
+          echo "Current directory:"
+          pwd
+          echo "Project files:"
+          ls -la
+          echo "App directory:"
+          ls -la app || true
+
+      - name: Build APK
+        run: gradle :app:assembleDebug
+
+      - name: Check APK
+        run: |
+          echo "APK files:"
+          find app/build/outputs -type f -name "*.apk" -print
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
