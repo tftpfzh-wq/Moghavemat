@@ -1,3 +1,4 @@
+```yaml
 name: Build Moghavemat APK
 
 on:
@@ -21,11 +22,16 @@ jobs:
           java-version: '17'
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses || true
 
       - name: Install Android SDK
         run: |
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+          sdkmanager "platform-tools"
+          sdkmanager "platforms;android-35"
+          sdkmanager "build-tools;35.0.0"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -33,7 +39,9 @@ jobs:
           gradle-version: '8.13'
 
       - name: Build APK
-        run: gradle :app:assembleDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
